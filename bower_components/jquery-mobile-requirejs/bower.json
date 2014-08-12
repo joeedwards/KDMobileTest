@@ -1,0 +1,11 @@
+{
+  "name": "jquery-mobile-requirejs",
+  "version": "1.3.2",
+  "dependencies": {
+    "jquery": "~1.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/totty90/jquery-mobile-requirejs.git"
+  }
+}

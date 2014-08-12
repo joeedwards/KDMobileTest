@@ -1,0 +1,21 @@
+{
+  "name": "jquery-mobile-requirejs",
+  "dependencies": {
+    "jquery": "~1.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/totty90/jquery-mobile-requirejs.git"
+  },
+  "homepage": "https://github.com/totty90/jquery-mobile-requirejs",
+  "_release": "8eac209d8f",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8eac209d8f8dfd73584b03440c026dd3c16844b1"
+  },
+  "_source": "git://github.com/totty90/jquery-mobile-requirejs.git",
+  "_target": "*",
+  "_originalSource": "jquery-mobile-requirejs",
+  "_direct": true
+}
