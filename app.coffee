@@ -1,73 +1,93 @@
-#(->
-serverURL = "http://test.krashdrive.com" # IMPORTANT: This URL needs to be accessible from your phone for testing.
-#$scroller = $(".scroller")
+serverURL = "http://test.krashdrive.com"
 
 #document.addEventListener 'deviceready', onDeviceReady, false
-#http = require 'http'
-#express = require 'express'
-
 
 #temp hard code
 identity = "joe+testkd01@megashares.com"
 password = "123456789"
+#password = "56789"
 
 data =
 	identity: identity
 	password: password
 	remember: 1
  
-# login
-#kdlogin = ->
-#$scroller.empty()
-#loadDataFromServer = ->
-#	req = new XMLHttpRequest()
-#	req.open 'POST', "#{serverURL}/auth/login", false
-#	req.send()
 
-
-#loadDataButton = document.getElementById 'loadDataButton'
-#loadDataButton.addEventListener 'click', kdlogin, false
-
-kdlogin = ->
-	#alert 'hi'
-
-	$.post "#{serverURL}/joe.php",
-		data: data
-		dataType: 'jsonp'
-
-	.fail ->
-		alert 'error' + result
-
-	.done (result) ->
-
-		alert result
-
-		if result.error
-			#$('#identity, #password').addClass 'has-error'
-			alert.error 'Unable to Login', 'Incorrect username or password.'
-
-		else
-			alert.success 'Woohoo!',
-				'You have successfully authorized KrashDrive Sync.'
-
-###
-	$.ajax 
-		type: 'POST'
-		#url: "#{serverURL}/auth/login"
-		url: "#{serverURL}/joe.php"
-		data: data
-		dataType: 'jsonp'
-###
-
-$('#loadDataButton').click ->
-	$.post "#{serverURL}/joe.php",
-		data: data
-		dataType: 'jsonp'
+#helper iterate an object with alert output
+alertObj = (data) ->
+	alert i for i of data
 	return
 
-#	kdlogin()
+#finds cookie by name
+findCookie = (cookieName) ->
+	if document.cookie 
+		cookieJar = document.cookie.split ';'
+#		cookieName in cookieJar
+	else 'no cookie'
+
+# store cookie as local storage key/val pairs from data object
+### -- pointless? local storage is only key/val, iterating and object might create thousands of pairs
+localCookie = (keyName = "kd-localcookiekey", dataObj) ->
+	property for property of dataObj
+		localStorage.setItem cookieName, property
+###
+
+# login
+kdlogin = ->
+
+	$.ajax
+		type: 'POST'
+		url: "#{serverURL}/auth/login"
+		#url: "#{serverURL}/joe.php"
+		data: data
+		dataType: 'json'
+		xhrFields:
+			withCredentials: true
+
+	.done (result, textStatus, jqXHR) ->
+
+		#alert items for items of jqXHR
+		#alert items for items of data
+		alert jqXHR.getResponseHeader 'Set-Cookie'
+		alert jqXHR.getAllResponseHeaders()
+		#alert jqXHR.statusText
+		#alert jqXHR.responseText
+
+		if result.error
+			alert result.error_message
+		else
+			alert 'Woohoo!' + 'You have successfully authorized KrashDrive Sync.'
+
+	#store auth info locally
+	localStorage.setItem 'kd-identity', data.identity
+	localStorage.setItem 'kd-identity', data.identity
+
+	#alert localStorage.getItem 'kd-identity'
+	#alertObj localStorage.getItem 'kd-identity'
+
+	#alert 'findcookie 1 ' + findCookie 'identity'
+	#alert 'findcookie 2 ' + findCookie 'remember_code'
+	
+
+$('#loadDataButton').click ->
+	kdlogin()
 
 ###
+                        set_cookie(array(
+                            'name'   => 'identity',
+                            'value'  => $user->{$this->identity_column},
+                            'expire' => $expire
+                        ));
+
+                        set_cookie(array(
+                            'name'   => 'remember_code',
+                            'value'  => $salt,
+                            'expire' => $expire
+                        ));
+
+
+
+
   # Get List of images from server
   getFeed = ->
     $scroller.empty()
