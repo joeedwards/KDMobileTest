@@ -1,15 +1,15 @@
-#serverURL = "http://test.krashdrive.com"
-serverURL = "http://192.168.0.28"
+serverURL = "http://test.krashdrive.com"
+#serverURL = "http://192.168.0.28"
 #CI error/404 or even displaying error NOTICE will cause .fail (no data)
 
 #document.addEventListener 'deviceready', onDeviceReady, false
 
 #temp hard code - test.kd
-#identity = "joe+testkd01@megashares.com"
-#password = "123456789"
-#localhost
-identity = "joe+localkd01@megashares.com"
+identity = "joe+testkd01@megashares.com"
 password = "123456789"
+#localhost
+#identity = "joe+localkd01@megashares.com"
+#password = "123456789"
 #password = "56789"
 
 data =

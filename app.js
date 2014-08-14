@@ -2,9 +2,9 @@
 (function() {
   var alertObj, data, findCookie, identity, kdactivity, kdlogin, password, serverURL;
 
-  serverURL = "http://192.168.0.28";
+  serverURL = "http://test.krashdrive.com";
 
-  identity = "joe+localkd01@megashares.com";
+  identity = "joe+testkd01@megashares.com";
 
   password = "123456789";
 
