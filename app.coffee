@@ -1,9 +1,14 @@
-serverURL = "http://test.krashdrive.com"
+#serverURL = "http://test.krashdrive.com"
+serverURL = "http://192.168.0.28"
+#CI error/404 or even displaying error NOTICE will cause .fail (no data)
 
 #document.addEventListener 'deviceready', onDeviceReady, false
 
-#temp hard code
-identity = "joe+testkd01@megashares.com"
+#temp hard code - test.kd
+#identity = "joe+testkd01@megashares.com"
+#password = "123456789"
+#localhost
+identity = "joe+localkd01@megashares.com"
 password = "123456789"
 #password = "56789"
 
@@ -31,6 +36,22 @@ localCookie = (keyName = "kd-localcookiekey", dataObj) ->
 	property for property of dataObj
 		localStorage.setItem cookieName, property
 ###
+kdactivity = ->
+	$.ajax
+		type: 'GET'
+		url: "#{serverURL}/joe/activity"
+		dataType: 'json'
+
+	.done (response) ->
+
+		alert response.time
+
+		if response.error
+			alert response.error_message
+		else
+			alert 'Woohoo!'
+
+	$('#files_content').html "response.total"
 
 # login
 kdlogin = ->
@@ -38,39 +59,37 @@ kdlogin = ->
 	$.ajax
 		type: 'POST'
 		url: "#{serverURL}/auth/login"
-		#url: "#{serverURL}/joe.php"
 		data: data
 		dataType: 'json'
-		xhrFields:
-			withCredentials: true
+		#url: "#{serverURL}/joe/activity"
+		#url: "#{serverURL}/joe.php"
+#		xhrFields:
+			#withCredentials: true
 
-	.done (result, textStatus, jqXHR) ->
+	#.done (response, textStatus, jqXHR) ->
+	.done (response) ->
 
-		#alert items for items of jqXHR
+		#alert items for items of response
+		#alert response.time
 		#alert items for items of data
-		alert jqXHR.getResponseHeader 'Set-Cookie'
-		alert jqXHR.getAllResponseHeaders()
-		#alert jqXHR.statusText
-		#alert jqXHR.responseText
 
-		if result.error
-			alert result.error_message
+		if response.error
+			alert response.error_message
 		else
 			alert 'Woohoo!' + 'You have successfully authorized KrashDrive Sync.'
 
 	#store auth info locally
-	localStorage.setItem 'kd-identity', data.identity
-	localStorage.setItem 'kd-identity', data.identity
+	#localStorage.setItem 'kd-identity', data.identity
 
 	#alert localStorage.getItem 'kd-identity'
 	#alertObj localStorage.getItem 'kd-identity'
 
-	#alert 'findcookie 1 ' + findCookie 'identity'
-	#alert 'findcookie 2 ' + findCookie 'remember_code'
-	
-
 $('#loadDataButton').click ->
 	kdlogin()
+
+$('#loadFilesButton').click ->
+	kdactivity()
+
 
 ###
                         set_cookie(array(
